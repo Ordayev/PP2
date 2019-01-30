@@ -11,8 +11,7 @@ namespace Task3
         static void Main(string[] args)
         {
             int n = Convert.ToInt32(Console.ReadLine());
-            string s = Console.ReadLine();
-            string[] arr = s.Split();
+            string[] arr = Console.ReadLine().Split();
             int[] a = new int[n * 2];
             for(int i = 0; i <n; i++)
             {
