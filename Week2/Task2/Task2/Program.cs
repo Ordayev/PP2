@@ -13,7 +13,7 @@ namespace Task2
         {
             string text = File.ReadAllText(@"C:\Users\acer\Desktop\PP2\Week2\Task2\cin.txt");
             string[] arr = text.Split();
-            int n = text.Length;
+            int n = arr.Length;
             string final = "";
             int[] a = new int[n];
             bool check = false;
@@ -29,7 +29,7 @@ namespace Task2
                         break;
                     }
                 }
-                if (check != false)
+                if (check == false)
                 {
                     final = final + a[i] + " ";
                 } 
