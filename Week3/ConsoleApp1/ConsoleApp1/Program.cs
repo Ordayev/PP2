@@ -8,15 +8,15 @@ using System.IO;
 namespace ConsoleApp1
 {
     class FarManager
-    {
-        public int cursor;
+    { 
+        public int cursor; //Создание переменных
         public string path;
         public int size;
         public bool ok;
         DirectoryInfo directory = null;
         FileSystemInfo currentFs = null;
 
-        public FarManager(string path)
+        public FarManager(string path) //придаем значенние созданным переменным 
         {
             this.path = path;
             cursor = 0;
@@ -25,7 +25,7 @@ namespace ConsoleApp1
             ok = true;
         }
 
-        public void Color(FileSystemInfo fs, int index)
+        public void Color(FileSystemInfo fs, int index)//Указываем применяемые цвета в разных случаях. Файл папка или наведен курсор 
         {
             if (cursor == index)
             {
@@ -45,7 +45,7 @@ namespace ConsoleApp1
             }
         }
 
-        public void Show()
+        public void Show()//Показывает файлы и папки, обновляет консоль, чекает скрытые файлы 
         {
             Console.BackgroundColor = ConsoleColor.Black;
             Console.Clear();
@@ -76,7 +76,7 @@ namespace ConsoleApp1
         }
 
 
-        public void Calc()
+        public void Calc() //Изменяет размер массива с дайректориями взависимости скрытых файлов 
         {
             directory = new DirectoryInfo(path);
             FileSystemInfo[] fs = directory.GetFileSystemInfos();
@@ -86,7 +86,7 @@ namespace ConsoleApp1
                     if (fs[i].Name[0] == '.')
                         size--;
         }
-        public void Start()
+        public void Start()// Основная функция где проходит процессы 
         {
             ConsoleKeyInfo ck = Console.ReadKey();
             while (ck.Key != ConsoleKey.Escape)
@@ -123,8 +123,8 @@ namespace ConsoleApp1
                 }
                 if (ck.Key == ConsoleKey.Delete)
                 {
-                    string path1 = currentFs.FullName;
-                    if (currentFs.GetType() == typeof(DirectoryInfo))
+                    string path1 = currentFs.FullName; //Записываем полную дайректорию файла
+                    if (currentFs.GetType() == typeof(DirectoryInfo))//Удаляем в зависимости папка это или файл 
                     {
                         Directory.Delete(path1, true);
                     }
@@ -135,20 +135,23 @@ namespace ConsoleApp1
                 }
                 if (ck.Key == ConsoleKey.R)
                 {
+                    string path1 = directory.FullName;
                     Console.BackgroundColor = ConsoleColor.Black;
                     Console.Clear();
-                    Console.WriteLine("Enter new name ");
+                    Console.WriteLine("Create new name");
                     string name = Console.ReadLine();
-                    
-                    string path1 = currentFs.FullName;
-                    string path2 = directory.Parent.FullName;
-                    if (currentFs.GetType() == typeof(DirectoryInfo))
+                    if (currentFs.GetType() == typeof(FileInfo))
                     {
-                          
+                        string sourcefile = currentFs.FullName;
+                        string destfile = path1 + @"\" + name;
+                        File.Move(sourcefile, destfile);
                     }
                     else
+                    if (currentFs.GetType() == typeof(DirectoryInfo))
                     {
-                        File.Move()
+                        string sourcedir = currentFs.FullName;
+                        string destdir = Path.Combine(path1, name); 
+                        Directory.Move(sourcedir, destdir);
                     }
                 }
             }
